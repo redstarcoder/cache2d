@@ -25,9 +25,9 @@ func fillGlyph(gc draw2d.GraphicContext, x, y float64, chr rune) float64 {
 	}
 	g := glyphCache[fontName][chr].Copy()
 	gc.Save()
+	gc.BeginPath()
 	gc.Translate(x, y)
-	gc.AppendPath(g.Path)
-	gc.Fill()
+	gc.Fill(g.Path)
 	gc.Restore()
 	return g.Width
 }
@@ -46,7 +46,6 @@ func renderGlyph(gc draw2d.GraphicContext, fontName string, chr rune) *Glyph {
 
 // FillStringByGlyph draws a string using glyphs in the cache, rendering them if they don't exist.
 func FillStringByGlyph(gc draw2d.GraphicContext, str string, x, y float64) float64 {
-	gc.BeginPath()
 	xorig := x
 	for _, r := range str {
 		x += fillGlyph(gc, x, y, r)
