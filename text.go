@@ -14,7 +14,7 @@ func init() {
 	glyphCache = make(map[string]map[rune]*Glyph)
 }
 
-// copyGlyph copies a Glyph from the cache to the gc. If it's not in the cache, it calls renderGlyph first
+// paintGlyph copies a Glyph from the cache to the gc. If it's not in the cache, it calls renderGlyph first
 func paintGlyph(gc draw2d.GraphicContext, x, y float64, chr rune) float64 {
 	fontName := gc.GetFontData().Name
 	if glyphCache[fontName] == nil {
