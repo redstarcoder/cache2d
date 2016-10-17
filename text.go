@@ -13,22 +13,8 @@ func init() {
 	glyphCache = make(map[string]map[rune]*Glyph)
 }
 
-// paintGlyph copies a Glyph from the cache to the gc. If it's not in the cache, it calls renderGlyph first
-func paintGlyph(gc draw2d.GraphicContext, x, y float64, chr rune) float64 {
-	fontName := gc.GetFontData().Name
-	if glyphCache[fontName] == nil {
-		glyphCache[fontName] = make(map[rune]*Glyph, 60)
-	}
-	if glyphCache[fontName][chr] == nil {
-		glyphCache[fontName][chr] = renderGlyph(gc, fontName, chr)
-	}
-	g := glyphCache[fontName][chr].Copy()
-	g.Path.Shift(x, y)
-	gc.AppendPath(g.Path)
-	return g.Width
-}
-
-// fillGlyph copies a Glyph from the cache to the gc and fills it. If it's not in the cache, it calls renderGlyph first
+// fillGlyph copies a Glyph from the cache to the gc and fills it. If it's not in the cache, it calls
+// renderGlyph first
 func fillGlyph(gc draw2d.GraphicContext, x, y float64, chr rune) float64 {
 	fontName := gc.GetFontData().Name
 	if glyphCache[fontName] == nil {
@@ -58,15 +44,7 @@ func renderGlyph(gc draw2d.GraphicContext, fontName string, chr rune) *Glyph {
 	}
 }
 
-func CreateStringPathByGlyph(gc draw2d.GraphicContext, str string, x, y float64) float64 {
-	xorig := x
-	for _, r := range str {
-		x += paintGlyph(gc, x, y, r)
-	}
-	return x - xorig
-}
-
-// FillStringByGlyph uses gc.Translate instead of Path.Shift
+// FillStringByGlyph draws a string using glyphs in the cache, rendering them if they don't exist.
 func FillStringByGlyph(gc draw2d.GraphicContext, str string, x, y float64) float64 {
 	gc.BeginPath()
 	xorig := x

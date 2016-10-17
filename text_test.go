@@ -74,32 +74,6 @@ func BenchmarkFillStringAtCached(b *testing.B) {
 	window.Destroy()
 }
 
-func BenchmarkFillStringAtCachedTranslate(b *testing.B) {
-	b.StopTimer()
-	width, height = 800, 800
-	window, err := glfw.CreateWindow(width, height, "BenchmarkFillStringAtCachedTranslate", nil, nil)
-	if err != nil {
-		panic(err)
-	}
-	window.MakeContextCurrent()
-	glfw.SwapInterval(0)
-
-	err = gl.Init()
-	if err != nil {
-		panic(err)
-	}
-
-	reshape(window, width, height)
-	for i := 0; i < b.N; i++ {
-		b.StartTimer()
-		displayStringCachedTranslate()
-		b.StopTimer()
-		window.SwapBuffers()
-		glfw.PollEvents()
-	}
-	window.Destroy()
-}
-
 func TestMain(m *testing.M) {
 	r := m.Run()
 	glfw.Terminate()
@@ -145,19 +119,6 @@ func displayString() {
 }
 
 func displayStringCached() {
-	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-
-	// Display FUNTEXT
-	gl.LineWidth(1)
-	gc.SetFillColor(color.RGBA{0, 0, 0, 0xff})
-	gc.BeginPath()
-	CreateStringPathByGlyph(gc, FUNTEXT, 10, gc.GetFontSize()+10)
-	gc.Fill()
-	
-	gl.Flush() /* Single buffered, so needs a flush. */
-}
-
-func displayStringCachedTranslate() {
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
 	// Display FUNTEXT
