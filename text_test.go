@@ -1,10 +1,10 @@
-// Open an OpenGl window and display a rectangle and "Hello World" using a OpenGl GraphicContext
 package cache2d
 
 import (
 	"testing"
 	"image/color"
 	"runtime"
+	"os"
 
 	"github.com/go-gl/gl/v2.1/gl"
 	"github.com/go-gl/glfw/v3.1/glfw"
@@ -23,20 +23,14 @@ const FUNTEXT = "qwertyuiopasdfghjklzxcvbnm1234567890~!@#$%^&*()_+{}|:'<>?/✪"
 
 func BenchmarkFillStringAt(b *testing.B) {
 	b.StopTimer()
-	err := glfw.Init()
-	if err != nil {
-		panic(err)
-	}
-	defer glfw.Terminate()
+	var err error
 	width, height = 800, 800
-	window, err := glfw.CreateWindow(width, height, "Benchmark FillStringAt", nil, nil)
+	window, err := glfw.CreateWindow(width, height, "BenchmarkFillStringAt", nil, nil)
 	if err != nil {
 		panic(err)
 	}
-
 	window.MakeContextCurrent()
-
-	glfw.SwapInterval(1)
+	glfw.SwapInterval(0)
 
 	err = gl.Init()
 	if err != nil {
@@ -51,24 +45,18 @@ func BenchmarkFillStringAt(b *testing.B) {
 		window.SwapBuffers()
 		glfw.PollEvents()
 	}
+	window.Destroy()
 }
 
 func BenchmarkFillStringAtCached(b *testing.B) {
 	b.StopTimer()
-	err := glfw.Init()
-	if err != nil {
-		panic(err)
-	}
-	defer glfw.Terminate()
 	width, height = 800, 800
-	window, err := glfw.CreateWindow(width, height, "Benchmark Cached Glyphs", nil, nil)
+	window, err := glfw.CreateWindow(width, height, "BenchmarkFillStringAtCached", nil, nil)
 	if err != nil {
 		panic(err)
 	}
-
 	window.MakeContextCurrent()
-
-	glfw.SwapInterval(1)
+	glfw.SwapInterval(0)
 
 	err = gl.Init()
 	if err != nil {
@@ -83,24 +71,18 @@ func BenchmarkFillStringAtCached(b *testing.B) {
 		window.SwapBuffers()
 		glfw.PollEvents()
 	}
+	window.Destroy()
 }
 
 func BenchmarkFillStringAtCachedTranslate(b *testing.B) {
 	b.StopTimer()
-	err := glfw.Init()
-	if err != nil {
-		panic(err)
-	}
-	defer glfw.Terminate()
 	width, height = 800, 800
-	window, err := glfw.CreateWindow(width, height, "Benchmark Cached Glyphs + Translate", nil, nil)
+	window, err := glfw.CreateWindow(width, height, "BenchmarkFillStringAtCachedTranslate", nil, nil)
 	if err != nil {
 		panic(err)
 	}
-
 	window.MakeContextCurrent()
-
-	glfw.SwapInterval(1)
+	glfw.SwapInterval(0)
 
 	err = gl.Init()
 	if err != nil {
@@ -115,6 +97,13 @@ func BenchmarkFillStringAtCachedTranslate(b *testing.B) {
 		window.SwapBuffers()
 		glfw.PollEvents()
 	}
+	window.Destroy()
+}
+
+func TestMain(m *testing.M) {
+	r := m.Run()
+	glfw.Terminate()
+	os.Exit(r)
 }
 
 func reshape(window *glfw.Window, w, h int) {
@@ -181,5 +170,9 @@ func displayStringCachedTranslate() {
 
 func init() {
 	runtime.LockOSThread()
+	err := glfw.Init()
+	if err != nil {
+		panic(err)
+	}
 	draw2d.SetFontFolder("resources/font")
 }
