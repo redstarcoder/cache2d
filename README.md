@@ -2,7 +2,7 @@ cache2d
 ======
 [![GoDoc](https://godoc.org/github.com/redstarcoder/cache2d?status.svg)](https://godoc.org/github.com/redstarcoder/cache2d)
 
-Package cache2d is for experimenting and demonstrating potential improvements caching can bring to [draw2d](https://github.com/llgcode/draw2d). Currently this relys on a [fork of draw2d](github.com/redstarcoder/draw2d) for `PathBuilder.CopyPath`.
+Package cache2d is for experimenting and demonstrating potential improvements caching can bring to [draw2d](https://github.com/llgcode/draw2d). Currently this relys on a [fork of draw2d](https://github.com/redstarcoder/draw2d) for `PathBuilder.CopyPath`.
 
 Benchmarks
 ---------------
