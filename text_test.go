@@ -1,10 +1,10 @@
 package cache2d
 
 import (
-	"testing"
 	"image/color"
-	"runtime"
 	"os"
+	"runtime"
+	"testing"
 
 	"github.com/go-gl/gl/v2.1/gl"
 	"github.com/go-gl/glfw/v3.1/glfw"
@@ -114,7 +114,7 @@ func displayString() {
 	gl.LineWidth(1)
 	gc.SetFillColor(color.RGBA{0, 0, 0, 0xff})
 	gc.FillStringAt(FUNTEXT, 10, gc.GetFontSize()+10)
-	
+
 	gl.Flush() /* Single buffered, so needs a flush. */
 }
 
@@ -125,7 +125,7 @@ func displayStringCached() {
 	gl.LineWidth(1)
 	gc.SetFillColor(color.RGBA{0, 0, 0, 0xff})
 	FillStringByGlyph(gc, FUNTEXT, 10, gc.GetFontSize()+10)
-	
+
 	gl.Flush() /* Single buffered, so needs a flush. */
 }
 
