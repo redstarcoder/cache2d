@@ -32,11 +32,6 @@ func BenchmarkFillStringAt(b *testing.B) {
 	window.MakeContextCurrent()
 	glfw.SwapInterval(0)
 
-	err = gl.Init()
-	if err != nil {
-		panic(err)
-	}
-
 	reshape(window, width, height)
 	for i := 0; i < b.N; i++ {
 		b.StartTimer()
@@ -57,11 +52,6 @@ func BenchmarkFillStringAtCached(b *testing.B) {
 	}
 	window.MakeContextCurrent()
 	glfw.SwapInterval(0)
-
-	err = gl.Init()
-	if err != nil {
-		panic(err)
-	}
 
 	reshape(window, width, height)
 	for i := 0; i < b.N; i++ {
@@ -132,6 +122,10 @@ func displayStringCached() {
 func init() {
 	runtime.LockOSThread()
 	err := glfw.Init()
+	if err != nil {
+		panic(err)
+	}
+	err = gl.Init()
 	if err != nil {
 		panic(err)
 	}
