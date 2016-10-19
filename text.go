@@ -1,6 +1,7 @@
 package cache2d
 
 import (
+	"fmt"
 	"github.com/redstarcoder/draw2d"
 )
 
@@ -16,7 +17,8 @@ func init() {
 // fillGlyph copies a Glyph from the cache to the gc and fills it. If it's not in the cache, it calls
 // renderGlyph first
 func fillGlyph(gc draw2d.GraphicContext, x, y float64, chr rune) float64 {
-	fontName := gc.GetFontData().Name
+	fontData := gc.GetFontData()
+	fontName := fmt.Sprintf("%s:%d:%d:%d", fontData.Name, fontData.Family, fontData.Style, gc.GetFontSize())
 	if glyphCache[fontName] == nil {
 		glyphCache[fontName] = make(map[rune]*Glyph, 60)
 	}
@@ -38,8 +40,9 @@ func renderGlyph(gc draw2d.GraphicContext, fontName string, chr rune) *Glyph {
 	defer gc.Restore()
 	gc.BeginPath()
 	width := gc.CreateStringPath(string(chr), 0, 0)
+	path := gc.GetPath()
 	return &Glyph{
-		Path:  gc.CopyPath(),
+		Path:  &path,
 		Width: width,
 	}
 }
