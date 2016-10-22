@@ -8,12 +8,21 @@ Benchmarks
 ---------------
 
 ```
-$ go test -bench . -benchtime 10s
+$ go test -bench=. -benchtime=5s
 testing: warning: no tests to run
-BenchmarkFillStringAt-4         	   10000	   2239271 ns/op
-BenchmarkFillStringAtCached-4   	   10000	   1108676 ns/op
+BenchmarkFillStringAt-4         	    3000	   2152957 ns/op
+BenchmarkFillStringAtCached-4   	   10000	    997937 ns/op
 PASS
-ok  	github.com/redstarcoder/cache2d	40.433s
+ok  	github.com/redstarcoder/cache2d	18.417s
+```
+
+```
+$ go test -bench=. -benchtime=10s -cpu 1
+testing: warning: no tests to run
+BenchmarkFillStringAt       	   10000	   2108196 ns/op
+BenchmarkFillStringAtCached 	   10000	   1203926 ns/op
+PASS
+ok  	github.com/redstarcoder/cache2d	34.654s
 ```
 
 Acknowledgments

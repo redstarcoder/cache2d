@@ -37,7 +37,6 @@ func BenchmarkFillStringAt(b *testing.B) {
 		b.StartTimer()
 		displayString()
 		b.StopTimer()
-		window.SwapBuffers()
 		glfw.PollEvents()
 	}
 	window.Destroy()
@@ -58,7 +57,6 @@ func BenchmarkFillStringAtCached(b *testing.B) {
 		b.StartTimer()
 		displayStringCached()
 		b.StopTimer()
-		window.SwapBuffers()
 		glfw.PollEvents()
 	}
 	window.Destroy()
